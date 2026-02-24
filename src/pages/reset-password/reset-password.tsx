@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { resetPasswordApi } from '@api';
 import { ResetPasswordUI } from '@ui-pages';
-import { deleteCookie } from '../../utils/cookie';
 
 export const ResetPassword: FC = () => {
   const navigate = useNavigate();
@@ -14,13 +13,7 @@ export const ResetPassword: FC = () => {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     setError(null);
-    resetPasswordApi({ password, token })
-      .then(() => {
-        localStorage.removeItem('resetPassword');
-        deleteCookie('accessToken');
-        navigate('/login');
-      })
-      .catch((err) => setError(err));
+    resetPasswordApi({ password, token }).catch((err) => setError(err));
   };
 
   useEffect(() => {

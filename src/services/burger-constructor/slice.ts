@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
+import { v4 as uuidv4 } from 'uuid';
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 import { orderBurger } from './action';
 
@@ -28,14 +28,22 @@ const constructorSlice = createSlice({
   initialState,
   reducers: {
     // Добавить ингредиент в конструктор
-    addIngredient: (state, action: PayloadAction<TConstructorIngredient>) => {
-      state.constructorItems.ingredients.push(action.payload);
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        state.constructorItems.ingredients.push(action.payload);
+      },
+      prepare: (ingredient: TIngredient) => ({
+        payload: {
+          ...ingredient,
+          id: uuidv4()
+        }
+      })
     },
 
     // Удалить ингредиент по ID
     removeIngredient: (state, action: PayloadAction<string>) => {
       const index = state.constructorItems.ingredients.findIndex(
-        (item) => item._id === action.payload
+        (item) => item.id === action.payload
       );
       if (index !== -1) {
         state.constructorItems.ingredients.splice(index, 1);
@@ -86,6 +94,7 @@ const constructorSlice = createSlice({
         (state, action: PayloadAction<{ order: TOrder; name: string }>) => {
           state.orderRequest = false;
           state.orderModalData = action.payload.order;
+          state.constructorItems = { bun: null, ingredients: [] };
         }
       )
       // Заказ провален

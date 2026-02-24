@@ -58,6 +58,7 @@ export const feedSlice = createSlice({
       })
       .addCase(fetchOrderById.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchOrderById.fulfilled, (state, action) => {
         state.loading = false;

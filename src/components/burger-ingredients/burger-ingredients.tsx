@@ -9,10 +9,6 @@ export const BurgerIngredients: FC = () => {
   const { items: ingredients, loading } = useSelector(
     (state) => state.ingredients
   );
-  /** TODO: взять переменные из стора */
-  //const buns = [];
-  //const mains = [];
-  //const sauces = [];
 
   const buns = useMemo(
     () => ingredients.filter((item: TIngredient) => item.type === 'bun'),
@@ -63,8 +59,6 @@ export const BurgerIngredients: FC = () => {
     if (tab === 'sauce')
       titleSaucesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  //return null;
 
   return (
     <BurgerIngredientsUI

@@ -19,17 +19,14 @@ export const ProtectedRoute: FC<TProtectedRouteProps> = ({
     return <Preloader />;
   }
 
-  if (onlyUnAuth) {
-    return user ? (
-      <Navigate replace to='/' state={{ from: location }} />
-    ) : (
-      children
-    );
+  if (onlyUnAuth && user) {
+    const { from } = location.state || { from: { pathname: '/' } };
+    return <Navigate replace to={from} />;
   }
 
-  return user ? (
-    children
-  ) : (
-    <Navigate replace to='/login' state={{ from: location }} />
-  );
+  if (!onlyUnAuth && !user) {
+    return <Navigate replace to='/login' state={{ from: location }} />;
+  }
+
+  return <>{children}</>;
 };

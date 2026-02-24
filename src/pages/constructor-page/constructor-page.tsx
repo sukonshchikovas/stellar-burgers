@@ -19,10 +19,6 @@ export const ConstructorPage: FC = () => {
     (state) => state.burgerConstructor.constructorItems
   );
 
-  const orderRequest = useSelector(
-    (state) => state.burgerConstructor.orderRequest
-  );
-
   const user = useSelector((state) => state.auth.user);
 
   // Собираем массив _id ингредиентов для заказа
@@ -32,16 +28,7 @@ export const ConstructorPage: FC = () => {
     bun?._id
   ].filter(Boolean) as string[];
 
-  const handleOrderClick = () => {
-    if (!user) {
-      navigate('/login', { state: { from: location } });
-      return;
-    }
-
-    dispatch(orderBurger(ingredientsIds));
-  };
-
-  if (isIngredientsLoading || orderRequest) {
+  if (isIngredientsLoading) {
     return (
       <main className={styles.containerMain}>
         <Preloader />

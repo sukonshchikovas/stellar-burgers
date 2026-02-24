@@ -5,11 +5,6 @@ import { TUser } from '@utils-types';
 import { updateUser } from '../../services/auth/action';
 
 export const Profile: FC = () => {
-  /** TODO: взять переменную из стора */
-  // const user = {
-  //   name: '',
-  //   email: ''
-  // };
   const dispatch = useDispatch();
 
   const user: TUser | null = useSelector((state) => state.auth.user);

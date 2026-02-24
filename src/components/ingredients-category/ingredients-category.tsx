@@ -19,7 +19,7 @@ export const IngredientsCategory = forwardRef<
     if (ingredient.type === 'bun') {
       dispatch(setBun(ingredient));
     } else {
-      dispatch(addIngredient({ ...ingredient, id: ingredient._id }));
+      dispatch(addIngredient(ingredient));
     }
   };
 
