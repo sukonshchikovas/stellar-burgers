@@ -1,0 +1,63 @@
+{
+  "success": true,
+  "name": "Флюоресцентный люминесцентный бургер",
+  "order": {
+    "ingredients": [
+      {
+        "_id": "bun-001",
+        "name": "Флюоресцентная булка R2-D3",
+        "type": "bun",
+        "proteins": 44,
+        "fat": 26,
+        "carbohydrates": 85,
+        "calories": 643,
+        "price": 988,
+        "image": "https://code.s3.yandex.net/react/code/bun-01.png",
+        "image_mobile": "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
+        "image_large": "https://code.s3.yandex.net/react/code/bun-01-large.png",
+        "__v": 0
+      },
+      {
+        "_id": "main-001",
+        "name": "Филе Люминесцентного тетраодонтимформа",
+        "type": "main",
+        "proteins": 44,
+        "fat": 26,
+        "carbohydrates": 85,
+        "calories": 643,
+        "price": 988,
+        "image": "https://code.s3.yandex.net/react/code/meat-03.png",
+        "image_mobile": "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
+        "image_large": "https://code.s3.yandex.net/react/code/meat-03-large.png",
+        "__v": 0
+      },
+      {
+        "_id": "bun-001",
+        "name": "Флюоресцентная булка R2-D3",
+        "type": "bun",
+        "proteins": 44,
+        "fat": 26,
+        "carbohydrates": 85,
+        "calories": 643,
+        "price": 988,
+        "image": "https://code.s3.yandex.net/react/code/bun-01.png",
+        "image_mobile": "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
+        "image_large": "https://code.s3.yandex.net/react/code/bun-01-large.png",
+        "__v": 0
+      }
+    ],
+    "_id": "69a1a753a64177001b32de78",
+    "owner": {
+      "name": "Иван Иванов",
+      "email": "testUser@yandex.ru",
+      "createdAt": "2026-02-21T09:57:24.204Z",
+      "updatedAt": "2026-02-21T17:32:47.820Z"
+    },
+    "status": "done",
+    "name": "Флюоресцентный люминесцентный бургер",
+    "createdAt": "2026-02-27T14:16:51.698Z",
+    "updatedAt": "2026-02-27T14:16:51.896Z",
+    "number": 102039,
+    "price": 2964
+  }
+}
