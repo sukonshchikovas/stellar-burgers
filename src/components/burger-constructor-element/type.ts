@@ -4,4 +4,6 @@ export type BurgerConstructorElementProps = {
   ingredient: TConstructorIngredient;
   index: number;
   totalItems: number;
+  dataCy?: string;
+  dataId?: string;
 };

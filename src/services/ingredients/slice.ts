@@ -49,5 +49,6 @@ const ingredientsSlice = createSlice({
       );
   }
 });
+export const { setIngredientModalData } = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;

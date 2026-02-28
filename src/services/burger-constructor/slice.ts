@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 import { orderBurger } from './action';
 
-interface IConstructorState {
+export interface IConstructorState {
   constructorItems: {
     bun: TIngredient | null;
     ingredients: TConstructorIngredient[];
@@ -13,7 +13,7 @@ interface IConstructorState {
   orderError: string | null;
 }
 
-const initialState: IConstructorState = {
+export const initialState: IConstructorState = {
   constructorItems: {
     bun: null,
     ingredients: []
