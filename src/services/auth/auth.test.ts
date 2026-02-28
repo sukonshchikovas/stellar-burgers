@@ -23,8 +23,8 @@ describe('auth slice', () => {
 
   const mockApiResponse = {
     success: true,
-    accessToken: 'access-123',
-    refreshToken: 'refresh-456',
+    accessToken: 'access-token-123',
+    refreshToken: 'refresh-token-456',
     user: mockUser
   };
 

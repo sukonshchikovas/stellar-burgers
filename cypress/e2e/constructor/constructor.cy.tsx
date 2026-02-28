@@ -3,6 +3,24 @@ import userData from '../../fixtures/user.json';
 import orderData from '../../fixtures/order.json';
 
 describe('Burger Constructor - Интеграционные тесты', () => {
+  const SELECTORS = {
+    orderModal: '[data-cy="order-modal"]',
+    ingredientModal: '[data-cy="ingredient-modal"]',
+    ingredientModalClose: '[data-cy="ingredient-modal-close"]',
+
+    burgerIngredient: '[data-cy="burger-ingredient"]',
+    addIngredientBtn: '[data-cy="add-ingredient-btn"]',
+
+    constructorIngredientsList: '[data-cy="constructor-ingredients-list"]',
+    constructorIngredient: '[data-cy="constructor-ingredient"]',
+    constructorTotalPrice: '[data-cy="constructor-total-price"]',
+    constructorBunTop: '[data-cy="constructor-bun-top"]',
+    constructorBunBottom: '[data-cy="constructor-bun-bottom"]',
+    constructorNoBunTop: '[data-cy="constructor-no-bun-top"]',
+    constructorNoBunBottom: '[data-cy="constructor-no-bun-bottom"]',
+    orderButton: '[data-cy="order-button"]'
+  } as const;
+
   const mockIngredients = require('../../fixtures/ingredients.json');
 
   const buns = mockIngredients.data.filter(
@@ -41,7 +59,7 @@ describe('Burger Constructor - Интеграционные тесты', () => {
       body: require('../../fixtures/order.json')
     }).as('createOrder');
 
-    cy.visit('/');
+    cy.visit('http://localhost:4000');
     cy.wait('@getIngredients');
   });
 
@@ -63,14 +81,14 @@ describe('Burger Constructor - Интеграционные тесты', () => {
       const bun = buns[0];
       const main = mains[0];
 
-      cy.get(`[data-cy="burger-ingredient"][data-id="${bun._id}"]`)
-        .find('[data-cy="add-ingredient-btn"]')
+      cy.get(`${SELECTORS.burgerIngredient}[data-id="${bun._id}"]`)
+        .find(SELECTORS.addIngredientBtn)
         .click();
-      cy.get(`[data-cy="burger-ingredient"][data-id="${main._id}"]`)
-        .find('[data-cy="add-ingredient-btn"]')
+      cy.get(`${SELECTORS.burgerIngredient}[data-id="${main._id}"]`)
+        .find(SELECTORS.addIngredientBtn)
         .click();
 
-      cy.get('[data-cy="order-button"]').click();
+      cy.get(SELECTORS.orderButton).click();
 
       cy.wait('@createOrder').then((interception) => {
         expect(interception.request.body).to.deep.equal({
@@ -78,30 +96,27 @@ describe('Burger Constructor - Интеграционные тесты', () => {
         });
       });
 
-      cy.get('[data-cy="order-modal"]').should('be.visible');
-      cy.get('[data-cy="order-modal"]').within(() => {
+      cy.get(SELECTORS.orderModal).should('be.visible');
+      cy.get(SELECTORS.orderModal).within(() => {
         cy.contains(orderData.order.number.toString()).should('be.visible');
       });
 
-      cy.get('[data-cy="ingredient-modal-close"]').click();
-      cy.get('[data-cy="order-modal"]').should('not.exist');
+      cy.get(SELECTORS.ingredientModalClose).click();
+      cy.get(SELECTORS.orderModal).should('not.exist');
 
-      cy.get('[data-cy="constructor-no-bun-top"]').should(
+      cy.get(SELECTORS.constructorNoBunTop).should('contain', 'Выберите булки');
+
+      cy.get(SELECTORS.constructorNoBunBottom).should(
         'contain',
         'Выберите булки'
       );
 
-      cy.get('[data-cy="constructor-no-bun-bottom"]').should(
-        'contain',
-        'Выберите булки'
-      );
-
-      cy.get('[data-cy="constructor-ingredients-list"]').should(
+      cy.get(SELECTORS.constructorIngredientsList).should(
         'contain',
         'Выберите начинку'
       );
 
-      cy.get('[data-cy="constructor-total-price"]').should('contain', '0');
+      cy.get(SELECTORS.constructorTotalPrice).should('contain', '0');
     });
   });
 
@@ -109,15 +124,15 @@ describe('Burger Constructor - Интеграционные тесты', () => {
     it('Добавление начинки', () => {
       const main = mains[0];
 
-      cy.get(`[data-cy="burger-ingredient"][data-id="${main._id}"]`)
-        .find('[data-cy="add-ingredient-btn"]')
+      cy.get(`${SELECTORS.burgerIngredient}[data-id="${main._id}"]`)
+        .find(SELECTORS.addIngredientBtn)
         .click();
 
-      cy.get('[data-cy="constructor-ingredients-list"]')
-        .find(`[data-cy="constructor-ingredient"][data-id="${main._id}"]`)
+      cy.get(SELECTORS.constructorIngredientsList)
+        .find(`${SELECTORS.constructorIngredient}[data-id="${main._id}"]`)
         .should('exist');
 
-      cy.get('[data-cy="constructor-total-price"]').should(
+      cy.get(SELECTORS.constructorTotalPrice).should(
         'contain',
         main.price.toString()
       );
@@ -127,32 +142,32 @@ describe('Burger Constructor - Интеграционные тесты', () => {
       const main = mains[0];
       const sauce = sauces[0];
 
-      cy.get(`[data-cy="burger-ingredient"][data-id="${bun._id}"]`)
-        .find('[data-cy="add-ingredient-btn"]')
+      cy.get(`${SELECTORS.burgerIngredient}[data-id="${bun._id}"]`)
+        .find(SELECTORS.addIngredientBtn)
         .click();
 
-      cy.get('[data-cy="constructor-bun-top"]').should('contain', bun.name);
+      cy.get(SELECTORS.constructorBunTop).should('contain', bun.name);
 
-      cy.get('[data-cy="constructor-bun-bottom"]').should('contain', bun.name);
+      cy.get(SELECTORS.constructorBunBottom).should('contain', bun.name);
 
-      cy.get(`[data-cy="burger-ingredient"][data-id="${main._id}"]`)
-        .find('[data-cy="add-ingredient-btn"]')
+      cy.get(`${SELECTORS.burgerIngredient}[data-id="${main._id}"]`)
+        .find(SELECTORS.addIngredientBtn)
         .click();
 
-      cy.get('[data-cy="constructor-ingredients-list"]')
-        .find(`[data-cy="constructor-ingredient"][data-id="${main._id}"]`)
+      cy.get(SELECTORS.constructorIngredientsList)
+        .find(`${SELECTORS.constructorIngredient}[data-id="${main._id}"]`)
         .should('exist');
 
-      cy.get(`[data-cy="burger-ingredient"][data-id="${sauce._id}"]`)
-        .find('[data-cy="add-ingredient-btn"]')
+      cy.get(`${SELECTORS.burgerIngredient}[data-id="${sauce._id}"]`)
+        .find(SELECTORS.addIngredientBtn)
         .click();
 
-      cy.get('[data-cy="constructor-ingredients-list"]')
-        .find(`[data-cy="constructor-ingredient"][data-id="${sauce._id}"]`)
+      cy.get(SELECTORS.constructorIngredientsList)
+        .find(`${SELECTORS.constructorIngredient}[data-id="${sauce._id}"]`)
         .should('exist');
 
       const expectedPrice = bun.price * 2 + main.price + sauce.price;
-      cy.get('[data-cy="constructor-total-price"]').should(
+      cy.get(SELECTORS.constructorTotalPrice).should(
         'contain',
         expectedPrice.toString()
       );
@@ -164,34 +179,34 @@ describe('Burger Constructor - Интеграционные тесты', () => {
       const ingredient = mains[0];
 
       cy.get(
-        `[data-cy="burger-ingredient"][data-id="${ingredient._id}"]`
+        `${SELECTORS.burgerIngredient}[data-id="${ingredient._id}"]`
       ).click();
 
-      cy.get('[data-cy="ingredient-modal"]')
+      cy.get(SELECTORS.ingredientModal)
         .should('be.visible')
         .should('contain', ingredient.name);
 
-      cy.get('[data-cy="ingredient-modal"]').should('contain', ingredient.name);
+      cy.get(SELECTORS.ingredientModal).should('contain', ingredient.name);
     });
 
     it('Закрытие модального окна по клику на крестик', () => {
       const ingredient = sauces[0];
 
       cy.get(
-        `[data-cy="burger-ingredient"][data-id="${ingredient._id}"]`
+        `${SELECTORS.burgerIngredient}[data-id="${ingredient._id}"]`
       ).click();
 
-      cy.get('[data-cy="ingredient-modal"]').should('be.visible');
+      cy.get(SELECTORS.ingredientModal).should('be.visible');
 
-      cy.get('[data-cy="ingredient-modal-close"]').first().click();
+      cy.get(SELECTORS.ingredientModalClose).first().click();
 
-      cy.get('[data-cy="ingredient-modal"]').should('not.exist');
+      cy.get(SELECTORS.ingredientModal).should('not.exist');
     });
 
     it('В модалке отображаются данные выбранного ингредиента', () => {
       const ingredient = sauces[0];
       cy.get(
-        `[data-cy="burger-ingredient"][data-id="${ingredient._id}"]`
+        `${SELECTORS.burgerIngredient}[data-id="${ingredient._id}"]`
       ).click();
 
       cy.contains(ingredient.name).should('be.visible');
